@@ -14,10 +14,8 @@ class ViewController: UIViewController {
     //To store the audio player in a variable
     var btnSound: AVAudioPlayer!
     
-    //To display the current computation
     @IBOutlet var outputLabel: UILabel!
     
-    //Represents 
     var currentNumber = ""
     var leftSideNumber = ""
     var rightSideNumber = ""
@@ -43,28 +41,54 @@ class ViewController: UIViewController {
         }
     }
     
-    //Call the playSound method each time a number is pressed
     @IBAction func numberPressed(sender: UIButton) {
         playSound()
-        
-        //Append each number pressed to the left side of the equation and update the output label
-        currentNumber += "\(sender.tag)"
-        outputLabel.text = currentNumber
-        leftSideNumber = currentNumber
-        rightSideNumber = leftSideNumber
-        
-    }
-    
-    //
-    @IBAction func operationsAndEqualBtn(sender: UIButton) {
-        if currentNumber != "" {
-            currentNumber = ""
-            operatorSymbol = sender.tag
+        if operatorSymbol != nil {
+            currentNumber += "\(sender.tag)"
+            outputLabel.text = currentNumber
+            rightSideNumber = currentNumber
+        }else {
+            currentNumber += "\(sender.tag)"
+            outputLabel.text = currentNumber
+            leftSideNumber = currentNumber
+        }
+        if leftSideNumber != "" && rightSideNumber != "" {
+            if operatorSymbol == 0 {
+                results = String(Int(leftSideNumber)! / Int(rightSideNumber)!)
+            }else if operatorSymbol == 1 {
+                results = String(Int(leftSideNumber)! * Int(rightSideNumber)!)
+            }else if operatorSymbol == 2 {
+                results = String(Int(leftSideNumber)! - Int(rightSideNumber)!)
+            }else if operatorSymbol == 3 {
+                results = String(Int(leftSideNumber)! + Int(rightSideNumber)!)
+            }
         }
     }
-    
-    func calculation(left: String, right: String) -> Int {
-        
+    @IBAction func operations(sender: UIButton) {
+        if leftSideNumber != "" {
+            operatorSymbol = sender.tag
+            if results != "" {
+                leftSideNumber = results
+                outputLabel.text = leftSideNumber
+                currentNumber = ""
+                rightSideNumber = ""
+            }else {
+                outputLabel.text = leftSideNumber
+                leftSideNumber += results
+                currentNumber = ""
+                rightSideNumber = ""
+            }
+        }
+    }
+    @IBAction func equals(_ sender: Any) {
+        if results != "" {
+            outputLabel.text = results
+            operatorSymbol = nil
+            leftSideNumber = outputLabel.text!
+            rightSideNumber = ""
+            results = ""
+            currentNumber = ""
+        }
     }
     
     //Check whether sound is playing and play it if it's not
