@@ -16,11 +16,19 @@ class ViewController: UIViewController {
     
     @IBOutlet var outputLabel: UILabel!
     
-    var currentNumber = ""
-    var leftSideNumber = ""
-    var rightSideNumber = ""
-    var results = ""
-    var operatorSymbol: Int?
+    enum Operations: String {
+        case Divide = "/"
+        case Multiply = "*"
+        case Subtract = "-"
+        case Add = "+"
+        case Empty = "Empty"
+    }
+    
+    var currentOperation = Operations.Empty
+    var runningNumber = ""
+    var leftValStr = ""
+    var rightValStr = ""
+    var resultValStr = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,51 +51,59 @@ class ViewController: UIViewController {
     
     @IBAction func numberPressed(sender: UIButton) {
         playSound()
-        if operatorSymbol != nil {
-            currentNumber += "\(sender.tag)"
-            outputLabel.text = currentNumber
-            rightSideNumber = currentNumber
+        
+        runningNumber += "\(sender.tag)"
+        outputLabel.text = runningNumber
+    }
+    
+    @IBAction func onDividePress(sender: AnyObject) {
+        processedOperation(operation: .Divide)
+    }
+
+    @IBAction func onMultiplyPress(sender: AnyObject) {
+        processedOperation(operation: .Multiply)
+    }
+    
+    @IBAction func onSubtractPress(sender: AnyObject) {
+        processedOperation(operation: .Subtract)
+    }
+    
+    @IBAction func onAddPress(sender: AnyObject) {
+        processedOperation(operation: .Add)
+    }
+    
+    @IBAction func onEqualPress(sender: AnyObject) {
+        processedOperation(operation: currentOperation)
+    }
+    
+    func processedOperation(operation: Operations) {
+        playSound()
+        
+        if currentOperation != Operations.Empty {
+            if runningNumber != "" {
+                rightValStr = runningNumber
+                runningNumber = ""
+                
+                if currentOperation == Operations.Divide {
+                    resultValStr = "\(Int(leftValStr)! / Int(rightValStr)!)"
+                }else if currentOperation == Operations.Multiply {
+                    resultValStr = "\(Int(leftValStr)! * Int(rightValStr)!)"
+                }else if currentOperation == Operations.Add {
+                    resultValStr = "\(Int(leftValStr)! + Int(rightValStr)!)"
+                }else if currentOperation == Operations.Subtract {
+                    resultValStr = "\(Int(leftValStr)! - Int(rightValStr)!)"
+                }
+                
+                leftValStr = resultValStr
+                outputLabel.text = resultValStr
+            }
+            
+            currentOperation = operation
+            
         }else {
-            currentNumber += "\(sender.tag)"
-            outputLabel.text = currentNumber
-            leftSideNumber = currentNumber
-        }
-        if leftSideNumber != "" && rightSideNumber != "" {
-            if operatorSymbol == 0 {
-                results = String(Int(leftSideNumber)! / Int(rightSideNumber)!)
-            }else if operatorSymbol == 1 {
-                results = String(Int(leftSideNumber)! * Int(rightSideNumber)!)
-            }else if operatorSymbol == 2 {
-                results = String(Int(leftSideNumber)! - Int(rightSideNumber)!)
-            }else if operatorSymbol == 3 {
-                results = String(Int(leftSideNumber)! + Int(rightSideNumber)!)
-            }
-        }
-    }
-    @IBAction func operations(sender: UIButton) {
-        if leftSideNumber != "" {
-            operatorSymbol = sender.tag
-            if results != "" {
-                leftSideNumber = results
-                outputLabel.text = leftSideNumber
-                currentNumber = ""
-                rightSideNumber = ""
-            }else {
-                outputLabel.text = leftSideNumber
-                leftSideNumber += results
-                currentNumber = ""
-                rightSideNumber = ""
-            }
-        }
-    }
-    @IBAction func equals(_ sender: Any) {
-        if results != "" {
-            outputLabel.text = results
-            operatorSymbol = nil
-            leftSideNumber = outputLabel.text!
-            rightSideNumber = ""
-            results = ""
-            currentNumber = ""
+            leftValStr = runningNumber
+            runningNumber = ""
+            currentOperation = operation
         }
     }
     
@@ -99,6 +115,68 @@ class ViewController: UIViewController {
             btnSound.play()
         }
     }
+    
+    
+//    var currentNumber = ""
+//    var leftSideNumber = ""
+//    var rightSideNumber = ""
+//    var results = ""
+//    var operatorSymbol: Int?
+    
+    
+//    @IBAction func numberPressed(sender: UIButton) {
+//        playSound()
+//        if operatorSymbol != nil {
+//            currentNumber += "\(sender.tag)"
+//            outputLabel.text = currentNumber
+//            rightSideNumber = currentNumber
+//        }else {
+//            currentNumber += "\(sender.tag)"
+//            outputLabel.text = currentNumber
+//            leftSideNumber = currentNumber
+//        }
+//        if leftSideNumber != "" && rightSideNumber != "" {
+//            if operatorSymbol == 0 {
+//                results = String(Int(leftSideNumber)! / Int(rightSideNumber)!)
+//            }else if operatorSymbol == 1 {
+//                results = String(Int(leftSideNumber)! * Int(rightSideNumber)!)
+//            }else if operatorSymbol == 2 {
+//                results = String(Int(leftSideNumber)! - Int(rightSideNumber)!)
+//            }else if operatorSymbol == 3 {
+//                results = String(Int(leftSideNumber)! + Int(rightSideNumber)!)
+//            }
+//        }
+//    }
+    
+    
+//    @IBAction func operations(sender: UIButton) {
+//        if leftSideNumber != "" {
+//            operatorSymbol = sender.tag
+//            if results != "" {
+//                leftSideNumber = results
+//                outputLabel.text = leftSideNumber
+//                currentNumber = ""
+//                rightSideNumber = ""
+//            }else {
+//                outputLabel.text = leftSideNumber
+//                leftSideNumber += results
+//                currentNumber = ""
+//                rightSideNumber = ""
+//            }
+//        }
+//    }
+    
+    
+//    @IBAction func equals(_ sender: Any) {
+//        if results != "" {
+//            outputLabel.text = results
+//            operatorSymbol = nil
+//            leftSideNumber = outputLabel.text!
+//            rightSideNumber = ""
+//            results = ""
+//            currentNumber = ""
+//        }
+//    }
 
 
 }

@@ -187,7 +187,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button" image="divide"/>
                                                 <connections>
-                                                    <action selector="operationsWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Bb-eU-SpC"/>
+                                                    <action selector="onDividePressWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DMd-Wb-zry"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XiR-TG-t9m">
@@ -198,7 +198,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button" image="multiply"/>
                                                 <connections>
-                                                    <action selector="operationsWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T0U-cl-N5w"/>
+                                                    <action selector="onMultiplyPressWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CrE-pC-2j5"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -214,7 +214,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button" image="subtract"/>
                                                 <connections>
-                                                    <action selector="operationsWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XlV-Gh-cMw"/>
+                                                    <action selector="onSubtractPressWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="paY-eu-UuW"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QzE-y4-f6W">
@@ -225,7 +225,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button" image="add"/>
                                                 <connections>
-                                                    <action selector="operationsWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wcp-m9-uU4"/>
+                                                    <action selector="onAddPressWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BtQ-bs-E3R"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hex-fG-Bxl">
@@ -236,7 +236,7 @@
                                                 </constraints>
                                                 <state key="normal" title="Button" image="equal"/>
                                                 <connections>
-                                                    <action selector="equals:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nNr-1K-yYb"/>
+                                                    <action selector="onEqualPressWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6UQ-4I-b7W"/>
                                                 </connections>
                                             </button>
                                         </subviews>
