@@ -54,42 +54,44 @@ class ViewController: UIViewController {
         
         runningNumber += "\(sender.tag)"
         outputLabel.text = runningNumber
+        
     }
-    
     @IBAction func onDividePress(sender: AnyObject) {
         processedOperation(operation: .Divide)
     }
-
     @IBAction func onMultiplyPress(sender: AnyObject) {
         processedOperation(operation: .Multiply)
     }
-    
     @IBAction func onSubtractPress(sender: AnyObject) {
         processedOperation(operation: .Subtract)
     }
-    
     @IBAction func onAddPress(sender: AnyObject) {
         processedOperation(operation: .Add)
     }
-    
     @IBAction func onEqualPress(sender: AnyObject) {
         processedOperation(operation: currentOperation)
+        
+        //Allows a new computation to be entered but disallows the continuation of the current computation
+//        currentOperation = Operations.Empty
     }
-    
     func processedOperation(operation: Operations) {
         playSound()
         
         if currentOperation != Operations.Empty {
+            
             if runningNumber != "" {
                 rightValStr = runningNumber
                 runningNumber = ""
                 
                 if currentOperation == Operations.Divide {
                     resultValStr = "\(Int(leftValStr)! / Int(rightValStr)!)"
+                    
                 }else if currentOperation == Operations.Multiply {
                     resultValStr = "\(Int(leftValStr)! * Int(rightValStr)!)"
+                    
                 }else if currentOperation == Operations.Add {
                     resultValStr = "\(Int(leftValStr)! + Int(rightValStr)!)"
+                    
                 }else if currentOperation == Operations.Subtract {
                     resultValStr = "\(Int(leftValStr)! - Int(rightValStr)!)"
                 }
@@ -99,7 +101,8 @@ class ViewController: UIViewController {
             }
             
             currentOperation = operation
-            
+         
+         //This runs the first time a number is pressed and currentOperation is Empty
         }else {
             leftValStr = runningNumber
             runningNumber = ""
