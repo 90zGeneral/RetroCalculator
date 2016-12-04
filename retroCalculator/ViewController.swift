@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     var leftValStr = ""
     var rightValStr = ""
     var resultValStr = ""
+    var equalSignPressed = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +55,7 @@ class ViewController: UIViewController {
         
         runningNumber += "\(sender.tag)"
         outputLabel.text = runningNumber
+        equalSignPressed = false
         
     }
     @IBAction func onDividePress(sender: AnyObject) {
@@ -71,42 +73,53 @@ class ViewController: UIViewController {
     @IBAction func onEqualPress(sender: AnyObject) {
         processedOperation(operation: currentOperation)
         
-        //Allows a new computation to be entered but disallows the continuation of the current computation
-//        currentOperation = Operations.Empty
+        equalSignPressed = true
     }
     func processedOperation(operation: Operations) {
         playSound()
         
-        if currentOperation != Operations.Empty {
+        //Allows user to continue current calculation when results is 0 AND prevents user frm starting a new computation b4 entering a number
+        if leftValStr == "0" || outputLabel.text != "0" {
             
-            if runningNumber != "" {
-                rightValStr = runningNumber
-                runningNumber = ""
+            if currentOperation != Operations.Empty {
                 
-                if currentOperation == Operations.Divide {
-                    resultValStr = "\(Int(leftValStr)! / Int(rightValStr)!)"
+                if runningNumber != "" {
+                    rightValStr = runningNumber
+                    runningNumber = ""
                     
-                }else if currentOperation == Operations.Multiply {
-                    resultValStr = "\(Int(leftValStr)! * Int(rightValStr)!)"
+                    if currentOperation == Operations.Divide {
+                        resultValStr = "\(Int(leftValStr)! / Int(rightValStr)!)"
+                        
+                    }else if currentOperation == Operations.Multiply {
+                        resultValStr = "\(Int(leftValStr)! * Int(rightValStr)!)"
+                        
+                    }else if currentOperation == Operations.Add {
+                        resultValStr = "\(Int(leftValStr)! + Int(rightValStr)!)"
+                        
+                    }else if currentOperation == Operations.Subtract {
+                        resultValStr = "\(Int(leftValStr)! - Int(rightValStr)!)"
+                    }
                     
-                }else if currentOperation == Operations.Add {
-                    resultValStr = "\(Int(leftValStr)! + Int(rightValStr)!)"
-                    
-                }else if currentOperation == Operations.Subtract {
-                    resultValStr = "\(Int(leftValStr)! - Int(rightValStr)!)"
+                    leftValStr = resultValStr
+                    outputLabel.text = resultValStr
                 }
                 
-                leftValStr = resultValStr
-                outputLabel.text = resultValStr
+                currentOperation = operation
+             
+             //This runs the first time a number is pressed and currentOperation is Empty
+            }else {
+                
+                //Prevents users from resetting leftValStr to "" by consecutively pressing Equal sign after selecting a number
+                if runningNumber != "" {
+                    leftValStr = runningNumber
+                    runningNumber = ""
+                    currentOperation = operation
+                    
+                }else {
+                    currentOperation = operation
+                }
             }
             
-            currentOperation = operation
-         
-         //This runs the first time a number is pressed and currentOperation is Empty
-        }else {
-            leftValStr = runningNumber
-            runningNumber = ""
-            currentOperation = operation
         }
     }
     
